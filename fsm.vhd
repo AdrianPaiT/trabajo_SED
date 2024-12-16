@@ -5,7 +5,9 @@ port (
 RESET      : in  std_logic; 
 CLK        : in  std_logic; 
 BUTTON : in  std_logic_vector(0 to 4); 
-led      : out std_logic_vector(0 TO 3) 
+switch: in std_logic;
+led      : out std_logic_vector(0 TO 4); 
+led_error: out std_logic 
 ); 
 end fsm; 
 architecture behavioral of fsm is 
@@ -29,25 +31,34 @@ case current_state is
       when S0 => 
         if BUTTON(0) = '1' then       
            next_state <= S1;
+           else       
+           next_state<= error;
         end if; 
       when S1 => 
         if BUTTON(1) = '1' then       
           next_state <= S2; 
+           else       
+           next_state<= error;
         end if; 
       when S2 =>  
         if BUTTON(2) = '1' then       
           next_state <= S3; 
+           
         end if; 
       when S3 =>  
         if BUTTON(3) = '1' then       
-          next_state <= S4; 
+          next_state <= S4;
+            
         end if;
        when S4=>
           if BUTTON(4) = '1' then       
           next_state <= S0; 
         end if;
-      when others => 
-        next_state <= error; 
+      when error => 
+          if switch='1' then
+          next_state<=S0;
+          end if;
+         
     end case; 
   end process; 
  
@@ -64,9 +75,9 @@ case current_state is
       when S3 =>  
         led(3) <= '1';
       when S4 =>  
-        led(3) <= '1';  
+        led(4) <= '1';  
       when error =>  
-        led <= (OTHERS => '0'); 
+        led_error<='1'; 
     end case; 
   end process; 
 end behavioral; 
