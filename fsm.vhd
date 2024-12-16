@@ -31,28 +31,32 @@ case current_state is
       when S0 => 
         if BUTTON(0) = '1' then       
            next_state <= S1;
-           else       
+           else   
            next_state<= error;
         end if; 
       when S1 => 
         if BUTTON(1) = '1' then       
           next_state <= S2; 
-           else       
+           else     
            next_state<= error;
         end if; 
       when S2 =>  
         if BUTTON(2) = '1' then       
           next_state <= S3; 
-           
+            else     
+           next_state<= error;
         end if; 
       when S3 =>  
         if BUTTON(3) = '1' then       
           next_state <= S4;
-            
+            else     
+           next_state<= error;
         end if;
        when S4=>
           if BUTTON(4) = '1' then       
           next_state <= S0; 
+           else     
+           next_state<= error;
         end if;
       when error => 
           if switch='1' then
@@ -80,4 +84,4 @@ case current_state is
         led_error<='1'; 
     end case; 
   end process; 
-end behavioral; 
+end behavioral;
