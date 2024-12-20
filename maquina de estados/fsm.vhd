@@ -4,10 +4,10 @@ entity fsm is
 port ( 
 RESET      : in  std_logic; 
 CLK        : in  std_logic; 
-BUTTON : in  std_logic_vector(0 to 4); 
-switch: in std_logic;
-led      : out std_logic_vector(0 TO 4); 
-led_error: out std_logic 
+PUSHBUTTON : in  std_logic_vector(0 to 4); 
+--switch: in std_logic;
+LIGHT      : out std_logic_vector(0 TO 4)
+--led_error: out std_logic:='0'
 ); 
 end fsm; 
 architecture behavioral of fsm is 
@@ -24,64 +24,66 @@ current_state<=next_state;
 end if;
 
 end process; 
-nextstate_decod: process (BUTTON, current_state) 
+nextstate_decod: process (PUSHBUTTON, current_state) 
 begin 
 next_state <= current_state; 
 case current_state is 
       when S0 => 
-        if BUTTON(0) = '1' then       
+        if PUSHBUTTON(0) = '1' then       
            next_state <= S1;
-           else   
-           next_state<= error;
+           --else   
+           --next_state<= error;
         end if; 
       when S1 => 
-        if BUTTON(1) = '1' then       
+        if PUSHBUTTON(1) = '1' then       
           next_state <= S2; 
-           else     
-           next_state<= error;
+           --else     
+           --next_state<= error;
         end if; 
       when S2 =>  
-        if BUTTON(2) = '1' then       
+        if PUSHBUTTON(2) = '1' then       
           next_state <= S3; 
-            else     
-           next_state<= error;
+            --else     
+           --next_state<= error;
         end if; 
       when S3 =>  
-        if BUTTON(3) = '1' then       
+        if PUSHBUTTON(3) = '1' then       
           next_state <= S4;
-            else     
-           next_state<= error;
+            --else     
+           --next_state<= error;
         end if;
        when S4=>
-          if BUTTON(4) = '1' then       
+          if PUSHBUTTON(4) = '1' then       
           next_state <= S0; 
-           else     
-           next_state<= error;
+           --else     
+           --next_state<= error;
         end if;
-      when error => 
-          if switch='1' then
-          next_state<=S0;
-          end if;
+        when others=>
+          next_state<= error;
+     -- when error => 
+          --if switch='1' then
+         -- next_state<=S0;
+          --end if;
          
     end case; 
   end process; 
  
   output_decod: process (current_state) 
   begin 
-    led <= (OTHERS => '0'); 
+    LIGHT <= (OTHERS => '0'); 
     case current_state is 
       when S0 => 
-        led(0) <= '1'; 
+        LIGHT(0) <= '1'; 
       when S1 => 
-        led(1) <= '1'; 
+        LIGHT(1) <= '1'; 
       when S2 =>  
-        led(2) <= '1'; 
+        LIGHT(2) <= '1'; 
       when S3 =>  
-        led(3) <= '1';
+        LIGHT(3) <= '1';
       when S4 =>  
-        led(4) <= '1';  
+        LIGHT(4) <= '1';  
       when error =>  
-        led_error<='1'; 
-    end case; 
-  end process; 
-end behavioral;
+        LIGHT <= (OTHERS => '0');
+    end case;
+    end process;
+    end behavioral; 
