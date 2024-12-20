@@ -31,32 +31,32 @@ case current_state is
       when S0 => 
         if PUSHBUTTON(0) = '1' then       
            next_state <= S1;
-           --else   
-           --next_state<= error;
+           elsif PUSHBUTTON(1) = '1' or PUSHBUTTON(2)='1' or PUSHBUTTON(3)='1'or PUSHBUTTON(4)='1' then 
+           next_state<= error;
         end if; 
       when S1 => 
         if PUSHBUTTON(1) = '1' then       
           next_state <= S2; 
-           --else     
-           --next_state<= error;
+           elsif PUSHBUTTON(0)='1' or PUSHBUTTON(2)='1'or PUSHBUTTON(3)='1'or PUSHBUTTON(4)='1' then    
+           next_state<= error;
         end if; 
       when S2 =>  
         if PUSHBUTTON(2) = '1' then       
           next_state <= S3; 
-            --else     
-           --next_state<= error;
+            elsif PUSHBUTTON(0)='1' or PUSHBUTTON(1)='1'or PUSHBUTTON(3)='1'or PUSHBUTTON(4)='1' then    
+           next_state<= error;
         end if; 
       when S3 =>  
         if PUSHBUTTON(3) = '1' then       
           next_state <= S4;
-            --else     
-           --next_state<= error;
+            elsif PUSHBUTTON(0)='1'or PUSHBUTTON(1)='1'or PUSHBUTTON(2)='1'or PUSHBUTTON(4)='1' then     
+           next_state<= error;
         end if;
        when S4=>
           if PUSHBUTTON(4) = '1' then       
           next_state <= S0; 
-           --else     
-           --next_state<= error;
+           elsif PUSHBUTTON(0)='1'or PUSHBUTTON(1)='1'or PUSHBUTTON(2)='1'or PUSHBUTTON(3)='1'  then   
+           next_state<= error;
         end if;
         when others=>
           next_state<= error;
