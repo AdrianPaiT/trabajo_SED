@@ -42,11 +42,7 @@ begin
 
 end;
   
-Configuration Declaration
-
--- Test bench configuration created online at:
---    https://www.doulos.com/knowhow/perl/vhdl-testbench-creation-using-perl/
--- Copyright Doulos Ltd
+--Configuration Declaration
 
 configuration cfg_top_tb of top_tb is
   for bench
